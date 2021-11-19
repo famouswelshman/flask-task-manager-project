@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
-</head>
-<body>
-    <h1>I'm part of the base template!</h1>
-    {% block content %}
-    {% endblock %}
-</body>
-</html>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/fontawesome.css" 
+                    integrity="sha512-xzy4wQrSuGvX9CdboUReHWcpUEmVpfhP4cQsKW2zPk5Wbcm6RO5qrCQt0P4yKYxqUERpNZlJZP33HqcyvfwxMg==" crossorigin="anonymous" referrerpolicy="no-referrer" type="text/css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+                <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+                {% block styles %}
+                {% endblock %}
+                <title>Task Manager</title>
+            </head>
+            <body>
+
+
+        
+        {% block content %}
+        {% endblock %}
+
+            <!----- Link below is the minified link from code.Jquery.com --------->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+                <!-- Compiled and minified JavaScript from Materialize website -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+            {% block scripts %}
+            {% endblock %}
+        </body>
+            </html>
