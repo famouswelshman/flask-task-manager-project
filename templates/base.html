@@ -8,8 +8,8 @@
                     integrity="sha512-xzy4wQrSuGvX9CdboUReHWcpUEmVpfhP4cQsKW2zPk5Wbcm6RO5qrCQt0P4yKYxqUERpNZlJZP33HqcyvfwxMg==" crossorigin="anonymous" referrerpolicy="no-referrer" type="text/css">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
                 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-                {% block styles %}
-                {% endblock %}
+    {% block styles %}
+    {% endblock %}
                     <title>Task Manager</title>
                 </head>
                 <body>
@@ -53,15 +53,15 @@
                                     <div class="row flashes">
                                         <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
                                     </div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
+                                 {% endfor %}
+                            {% endif %}
+                        {% endwith %}                  
 
                     </section>
 
         <main class="container">
-            {% block content %}
-            {% endblock %}
+    {% block content %}
+    {% endblock %}
         </main>
 
             <!----- Link below is the minified link from code.Jquery.com --------->
