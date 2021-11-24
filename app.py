@@ -24,7 +24,7 @@ def get_tasks():
     tasks = list(mongo.db.tasks.find())
     return render_template("tasks.html", tasks=tasks)
 
-
+# REGISTER A NEW USERNAME AND PASSWORD WITHIN THE DATABASE
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -49,7 +49,7 @@ def register():
 
     return render_template("register.html")
 
-
+# LOGIN INTO DATABASE
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -78,10 +78,10 @@ def login():
 
     return render_template("login.html")
 
-
+ # grab the session user's username from db
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    # grab the session user's username from db
+   
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
 
@@ -90,15 +90,15 @@ def profile(username):
 
     return redirect(url_for("login"))
 
-
+ # remove user from session cookie
 @app.route("/logout")
 def logout():
-    # remove user from session cookie
+   
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
 
-
+# ADD A TASK TO THE DATABASE AS USER
 @app.route("/add_task", methods=["GET", "POST"])
 def add_task():
     if request.method == "POST":
@@ -118,7 +118,7 @@ def add_task():
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template("add_task.html", categories=categories)
 
-
+# EDIT A TASK IN THE DATABASE
 @app.route("/edit_task/<task_id>", methods=["GET", "POST"])
 def edit_task(task_id):
     if request.method == "POST":
@@ -138,18 +138,46 @@ def edit_task(task_id):
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template("edit_task.html", task=task, categories=categories)
 
-
+# DELETE TASK FROM THE DATABASE
 @app.route("/delete_task/<task_id>")
 def delete_task(task_id):
     mongo.db.tasks.remove({"_id": ObjectId(task_id)})
     flash("Task Successfully Deleted")
     return redirect(url_for("get_tasks"))
 
-
+# RETURNS THE LIST OF CATEGORIES IN THE DATABASE (ADMIN ONLY)
 @app.route("/get_categories")
 def get_categories():
     categories = list(mongo.db.categories.find().sort("category_name", 1))
     return render_template("categories.html", categories=categories)
+
+# THIS WILL ADD A NEW CATEGORY TO THE DATABASE
+@app.route("/add_category", methods=["GET", "POST"])
+def add_category():
+    if request.method == "POST":
+        category = {
+            "category_name": request.form.get("category_name")
+        }
+        mongo.db.categories.insert_one(category)
+        flash("New Category Added")
+        return redirect(url_for("get_categories"))
+
+    return render_template("add_category.html")
+
+
+# ALLOWS ADMIN TO EDIT CATEGORIES
+@app.route("/edit_category/<category_id>", methods=["GET", "POST"])
+def edit_category(category_id):
+    if request.method == "POST":
+        submit = {
+            "category_name": request.form.get("category_name")
+        }
+        mongo.db.categories.update({"_id": ObjectId(category_id)}, submit)
+        flash("Category Successfully Updated")
+        return redirect("url_for"("get_categories"))
+        
+    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+    return render_template("edit_category.html", category=category)
 
 
 if __name__ == "__main__":
